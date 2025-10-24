@@ -1,17 +1,19 @@
-# ⚔️ StickArena - Real-time Multiplayer 2D Fighting Game
+# ⚔️ Street Fighter Duel (Local Edition) - 2D Fighting Game
 
-**StickArena** is a real-time multiplayer 2D stickman fighting game built with the MERN stack (MongoDB, Express.js, React, Node.js) and Socket.IO for real-time gameplay synchronization.
+**Street Fighter Duel (Local Edition)** is a local multiplayer 2D stickman fighting game built with the MERN stack (MongoDB, Express.js, React, Node.js) and Socket.IO for real-time gameplay synchronization.
+
+**Project by**: Lavya Tanotra
+
+![Game Sprite Reference](frontend/src/assets/Idle-outline.png)
 
 ## 🎮 Features
 
-- **Real-time Multiplayer**: Fight against other players in real-time using Socket.IO
+- **Local Multiplayer**: Fight against a friend on the same device
 - **User Authentication**: Register/login with secure password hashing (bcrypt)
-- **Matchmaking System**: Automatic opponent matching
 - **Live Game Physics**: Jump, move, punch, and kick with collision detection
 - **Health System**: Track HP and determine winners
-- **Leaderboard**: View top players ranked by wins
-- **Match History**: Store and display past matches
-- **Responsive Canvas**: Smooth 60 FPS gameplay with HTML5 Canvas
+- **Responsive Canvas**: Smooth 30 FPS gameplay with HTML5 Canvas
+- **Real-time Synchronization**: Server-authoritative physics with Socket.IO
 
 ## 🛠️ Tech Stack
 
@@ -32,7 +34,7 @@
 ## 📁 Project Structure
 
 ```
-StickArena/
+Street Fighter Duel/
 ├── backend/
 │   ├── config/
 │   │   └── database.js          # MongoDB connection
@@ -51,7 +53,7 @@ StickArena/
 │   │   ├── pages/
 │   │   │   ├── Login.jsx        # Login/Register page
 │   │   │   ├── Lobby.jsx        # Main lobby
-│   │   │   └── Game.jsx         # Game canvas + logic
+│   │   │   └── GameCanvas.jsx   # Game canvas + logic
 │   │   ├── services/
 │   │   │   ├── apiService.js    # HTTP API calls
 │   │   │   └── socketService.js # Socket.IO wrapper
@@ -64,7 +66,11 @@ StickArena/
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### 🎮 Play Online
+- **Frontend**: https://stick-man-vert.vercel.app/
+- **Backend API**: https://stickman-kmzh.onrender.com/api
+
+### 📋 Prerequisites (for local development)
 
 - **Node.js** (v16 or higher)
 - **MongoDB** (local or Atlas)
@@ -73,8 +79,8 @@ StickArena/
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd StickArena
+git clone https://github.com/LAVYA255/StickMan.git
+cd StickMan
 ```
 
 ### 2. Backend Setup
@@ -133,75 +139,72 @@ mongod
 ### Game Rules
 
 1. **Register/Login**: Create an account or log in
-2. **Join Match**: Click "Quick Match" to find an opponent
-3. **Fight**: Reduce your opponent's HP to 0 to win
-4. **Win**: Gain +1 win in your stats and leaderboard ranking
+2. **Local Multiplayer**: Press "START LOCAL MULTIPLAYER" to fight a friend
+3. **Controls**:
+   - **Player 1**: A/D (move left/right), W (jump), Q (punch), E (kick)
+   - **Player 2**: J/L (move left/right), I (jump), U (punch), P (kick)
+4. **Fight**: Reduce your opponent's HP to 0 to win
+5. **Restart**: Click "Restart" in the winner modal to play again
 
 ## 📡 Socket.IO Events
 
 ### Client → Server
-- `join_room`: Join/create a game room
-- `player_move`: Send movement input (left/right/stop)
+- `join_local_multiplayer`: Join a local multiplayer room
+- `player_move`: Send movement input (left/right)
 - `player_jump`: Jump action
 - `player_attack`: Attack action (punch/kick)
-- `leave_room`: Leave current room
+- `player2_move`: Player 2 movement (local)
+- `player2_jump`: Player 2 jump (local)
+- `player2_attack`: Player 2 attack (local)
+- `restart_match`: Restart the game
 
 ### Server → Client
-- `room_joined`: Confirmation of room join
-- `game_start`: Game begins (2 players ready)
-- `state_update`: Real-time game state (60 FPS)
-- `player_attacked`: Attack animation trigger
-- `match_end`: Match result with winner/loser
-- `player_disconnected`: Opponent left
+- `game_state`: Real-time game state (30 FPS)
+- `match_ended`: Match result with winner
+- `match_restarted`: Match ready to restart
 
 ## 🔌 API Endpoints
 
 ### Authentication
 - `POST /api/auth/register` - Register new user
 - `POST /api/auth/login` - Login user
-- `GET /api/auth/leaderboard` - Get top 10 players
-- `GET /api/auth/profile/:username` - Get user profile + match history
+- `GET /api/auth/profile/:username` - Get user profile
 
 ## 🎨 Game Features
 
 ### Physics System
-- **Gravity**: 0.8 units/frame
-- **Jump Force**: -15 units
-- **Move Speed**: 5 units/frame
-- **Attack Range**: 60 pixels
-- **Canvas Size**: 800x400 pixels
+- **Gravity**: 1.0 units/frame
+- **Jump Force**: -16 units
+- **Movement Acceleration**: 0.6 units/frame
+- **Movement Deceleration**: 0.8 units/frame
+- **Max Move Speed**: 4.5 units/frame
+- **Attack Range**: 100 pixels
+- **Hitbox Size**: 120x160 pixels
+- **Canvas Size**: 800x400 pixels (10x sprite scale)
 
 ### Combat System
-- **Punch**: 10 damage, 200ms cooldown
-- **Kick**: 15 damage, 300ms cooldown
+- **Punch Damage**: 10 base + collision bonus
+- **Kick Damage**: 15 base + collision bonus
+- **Collision Damage**: 6 damage on contact
 - **Max HP**: 100
-- **Collision Detection**: Range-based hit detection
+- **Attack Collision Detection**: AABB (Axis-Aligned Bounding Box) with one-hit-per-attack tracking
 
 ### Game States
-- `waiting`: Waiting for opponent
+- `waiting`: Waiting for opponent to join
 - `playing`: Match in progress
-- `ended`: Match finished
+- `ended`: Match finished, winner displayed
 
 ## 🚀 Deployment
 
-### Backend Deployment (Heroku, Railway, etc.)
+### Backend Deployment (Render)
+- **Live URL**: https://stickman-kmzh.onrender.com/api
+- Deployed with MongoDB Atlas connection
+- Environment variables configured on Render dashboard
 
-1. Set environment variables:
-   - `MONGODB_URI`
-   - `JWT_SECRET`
-   - `PORT`
-   - `CLIENT_URL`
-
-2. Deploy backend code
-
-### Frontend Deployment (Vercel, Netlify, etc.)
-
-1. Update `.env` with production backend URL
-2. Build the project:
-   ```bash
-   npm run build
-   ```
-3. Deploy the `dist` folder
+### Frontend Deployment (Vercel)
+- **Live URL**: https://stick-man-vert.vercel.app/
+- Auto-deploys on git push to main branch
+- CORS configured for production backend
 
 ## 🧪 Testing
 
@@ -220,24 +223,27 @@ npm run dev
 ```
 
 ### Test Multiplayer
-1. Open two browser windows
-2. Register two different users
-3. Click "Quick Match" in both windows
+1. Open https://stick-man-vert.vercel.app/ in your browser
+2. Register two different accounts (or use two different browsers/tabs)
+3. Click "START LOCAL MULTIPLAYER" in both windows
 4. Fight in real-time!
+
+## 📝 Development Notes
 
 ## 📝 Development Notes
 
 ### Code Architecture
 - **Backend**: Event-driven architecture with Socket.IO
 - **Frontend**: Component-based React with custom hooks
-- **Game Loop**: Server-authoritative game state at 60 FPS
+- **Game Loop**: Server-authoritative game state at 30 FPS
+- **Physics**: AABB collision detection with one-hit-per-attack tracking
 - **Database**: NoSQL document model with Mongoose ODM
 
-### Performance
-- Server processes physics at 60 FPS
-- Client renders at browser refresh rate
-- State updates broadcast only to room participants
-- Optimistic client-side input handling
+### Key Implementation Details
+- **Sprite Scaling**: All sprites doubled in size (scale = 10x)
+- **One-Hit System**: `attackHitApplied` flag prevents multi-hit damage on same attack
+- **Server Authority**: All physics calculations done server-side to prevent cheating
+- **Real-time Sync**: State broadcasts at 30 FPS to keep clients in sync
 
 ## 🐛 Troubleshooting
 
@@ -270,12 +276,12 @@ MIT License - feel free to use this project for learning or commercial purposes.
 
 ## 🎉 Credits
 
-Created with ❤️ using the MERN stack and Socket.IO.
-
-## 📧 Support
-
-For issues or questions, please open an issue on GitHub.
+Created with ❤️ by **Lavya Tanotra** using the MERN stack and Socket.IO.
 
 ---
+
+**Play Now**: https://stick-man-vert.vercel.app/ ⚔️
+
+**GitHub**: https://github.com/LAVYA255/StickMan
 
 **Happy Fighting! ⚔️🥊**
