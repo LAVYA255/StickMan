@@ -124,7 +124,7 @@ function Lobby() {
   return (
     <div className="lobby-container">
       <div className="lobby-header">
-        <h1>⚔️ StickArena Lobby</h1>
+        <h1>⚔️ Street Fighter Duel (Local Edition)</h1>
         <div className="user-info">
           <span>Welcome, <strong>{user.username}</strong>!</span>
           <button onClick={handleLogout} className="btn-logout">Logout</button>
@@ -160,51 +160,26 @@ function Lobby() {
           </div>
 
           <div className="action-card">
-            <h2>Start Playing</h2>
+            <h2>Ready to Fight?</h2>
             {error && <div className="error-message">{error}</div>}
             
             <button 
               onClick={handleLocalMultiplayer} 
               className="btn-play btn-local-multiplayer"
               disabled={loading}
+              style={{ fontSize: '18px', padding: '20px' }}
             >
-              {loading ? '🎮 Starting Game...' : '👥 Local Multiplayer (2 Players)'}
+              {loading ? '🎮 Starting Game...' : '👥 START LOCAL MULTIPLAYER'}
             </button>
-            <p className="help-text">
-              Two players on the same keyboard
-            </p>
-
-            <div className="divider">OR</div>
-
-            <button 
-              onClick={handleSinglePlayer} 
-              className="btn-play btn-single-player"
-              disabled={loading}
-            >
-              {loading ? '🤖 Starting Game...' : '🤖 Single Player (vs AI)'}
-            </button>
-            <p className="help-text">
-              Fight against a hard AI opponent
-            </p>
-
-            <div className="divider">OR</div>
-
-            <button 
-              onClick={handleQuickMatch} 
-              className="btn-play btn-multiplayer"
-              disabled={loading}
-            >
-              {loading ? '🔍 Finding Opponent...' : '🎮 Multiplayer Match'}
-            </button>
-            <p className="help-text">
-              You'll be matched with another player automatically
+            <p className="help-text" style={{ fontSize: '16px', marginTop: '10px' }}>
+              Two fighters, one keyboard. Battle it out now!
             </p>
           </div>
 
           <div className="controls-card">
-            <h2>Controls</h2>
+            <h2>⌨️ Controls</h2>
             <div style={{marginBottom: '15px'}}>
-              <h3 style={{color: '#667eea', marginTop: 0}}>Player 1</h3>
+              <h3 style={{color: '#ff0000', marginTop: 0}}>🔴 Player 1</h3>
               <div className="controls-grid">
                 <div className="control-item">
                   <span className="key">A/D</span>
@@ -215,24 +190,24 @@ function Lobby() {
                   <span className="action">Jump</span>
                 </div>
                 <div className="control-item">
-                  <span className="key">Z</span>
+                  <span className="key">Q</span>
                   <span className="action">Punch</span>
                 </div>
                 <div className="control-item">
-                  <span className="key">X</span>
+                  <span className="key">E</span>
                   <span className="action">Kick</span>
                 </div>
               </div>
             </div>
             <div>
-              <h3 style={{color: '#764ba2', marginTop: 0}}>Player 2</h3>
+              <h3 style={{color: '#0000ff', marginTop: 0}}>🔵 Player 2</h3>
               <div className="controls-grid">
                 <div className="control-item">
-                  <span className="key">I/K</span>
+                  <span className="key">J/L</span>
                   <span className="action">Move Left/Right</span>
                 </div>
                 <div className="control-item">
-                  <span className="key">O</span>
+                  <span className="key">I</span>
                   <span className="action">Jump</span>
                 </div>
                 <div className="control-item">
@@ -245,7 +220,6 @@ function Lobby() {
                 </div>
               </div>
             </div>
-            <p className="alt-controls">Try Local Multiplayer mode!</p>
           </div>
         </div>
 

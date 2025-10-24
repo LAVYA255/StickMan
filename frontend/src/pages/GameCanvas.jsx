@@ -541,8 +541,8 @@ const GameCanvas = () => {
         gap: '20px'
       }}>
         <div style={{ flex: 1, textAlign: 'center' }}>
-          <h1 style={{ margin: '0', color: '#333', fontSize: '28px' }}>⚔️ StickArena</h1>
-          <p style={{ margin: '5px 0 0 0', color: '#666', fontSize: '14px' }}>Local Multiplayer</p>
+          <h1 style={{ margin: '0', color: '#333', fontSize: '28px' }}>⚔️ Street Fighter Duel</h1>
+          <p style={{ margin: '5px 0 0 0', color: '#666', fontSize: '14px' }}>Local Edition</p>
         </div>
         <div style={{
           display: 'flex',
