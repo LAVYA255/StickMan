@@ -19,7 +19,8 @@ const io = socketIO(server, {
     origin: [
       process.env.CLIENT_URL || 'http://localhost:5173',
       'http://localhost:5173',
-      'http://localhost:3000'
+      'http://localhost:3000',
+      'https://stick-man-vert.vercel.app'
     ],
     methods: ['GET', 'POST']
   }
@@ -30,7 +31,8 @@ app.use(cors({
   origin: [
     process.env.CLIENT_URL || 'http://localhost:5173',
     'http://localhost:5173',
-    'http://localhost:3000'
+    'http://localhost:3000',
+    'https://stick-man-vert.vercel.app'
   ],
   credentials: true
 }));
