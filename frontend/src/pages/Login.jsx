@@ -39,8 +39,8 @@ function Login() {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h1 className="game-title">⚔️ StickArena ⚔️</h1>
-        <p className="game-subtitle">Real-time Multiplayer Fighting Game</p>
+        <h1 className="game-title">⚔️ Street Fighter Duel ⚔️</h1>
+        <p className="game-subtitle">Local Multiplayer Fighting Game</p>
 
         <form onSubmit={handleSubmit} className="login-form">
           <h2>{isLogin ? 'Login' : 'Register'}</h2>
